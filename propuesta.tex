@@ -1,0 +1,70 @@
+%\documentclass{sty/eiiatfg}
+\documentclass{sty/propuesta}
+%\setmonofont{Noto Sans Mono}
+
+\addbibresource{bib/main.bib}
+
+%\input{datos-tfg.tex}
+
+\title{Propuesta de TFG}
+\author{David Morán Soriano}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+\newpage
+
+\section{Introducción}
+En este documento se recogerá la propuesta inicial de un TFG para el grado de \emph{Ingeniería Aeroespacial} en la \emph{UCLM}.
+
+Para este TFG se plantea el estudio, desarrollo e implementación de un sistema de navegación aérea de bajo coste mediante el empleo de medidas inerciales tomadas por sensores MEMS y respaldadas por posicionamiento satelital y medidas barométricas.
+
+Con el fin de unificar toda la información adquirida por los distintos sensores se propone emplear un conjunto de Filtros de Kalman Expandidos ejecutándose en un SoC de bajo presupuesto.
+
+
+\section{Objetivos}
+A continuación se listarán los objetivos prelimirares principales y secundarios que se pretende explorar durante el desarrollo del TFG.
+\begin{itemize}
+    \item Principales
+        \subitem Lectura en bruto de los sensores de forma periódica y confiable.
+        \subitem Preprocesado e interpretación de lecturas.
+        \subitem Registrar medidas de forma local(Tarjeta SD).
+        \subitem Creación de un modelo de filtro de Kalman ajustado al sistema dinámico con el que se trabaja.
+        \subitem Modelado de un sistema dinámico que permita probar el filtro de Kalman.
+        \subitem Integración del filtro de Kalman y lectura de sensores en el hardware escogido.
+        \subitem Evaluación de rendimiento del sistema (Latencia + precisión + consumo).
+
+    \item Secundarios
+        \subitem Grabar rutas de navegación en Tajeta SD.
+        \subitem Comparar ruta respecto a medidas.
+        \subitem Añadir telemetría.
+        \subitem Proponer correcciones.
+        \subitem Actuar conforme a las correcciones.
+\end{itemize}
+
+\section{Planificación}
+
+Para abordar este proyecto se plantea tomar un enfoque expansivo en el que se comience alcanzando unos objetivos mínimos y, posteriormente se realice un proceso iterativo en el que se vaya ampliando y mejorando la funcionalidad del sistema.
+
+Este enfoque requiere que se realice un estudio inicial en el que se plantee el alcance máximo del proyecto, de forma que se pueda diseñar el código para ser capaz de incorporar nueva funcionalidad sin necesidad de realizar alteraciones significativas.
+
+Además, dado que se pretende alterar continuamente el código, serán necesarios mecanismos que permitan facilitar y automatizar la verificación de la funcionalidad de forma retroactiva.
+
+El TFG estará dividido en 3 secciones principales, que serán las que se irán ejecutando de forma iterativa.
+
+La primera consistirá en una fase de investigación en la que se estudie y plantee el modelo que se quiera implementar. El resultado será un modelo matemático y una propuesta breve sobre como implementarlo.
+
+La segunda traducirá el modelo a un lenguaje de programación, comúnmente C, aunque también se podrán emplear Python y Matlab para hacer pruebas de funcionalidad o hacer pruebas más rápidamente. Como resultado se obtendrá un código que se podrá ejecutar en el hardware escogido.
+
+Finalmente, se realizará una fase de evaluación en la que se comprobará el desempeño del modelo en un caso controlado, en el que se pueda comparar los resultados con los obtenidos, tanto en iteraciones anteriores como respecto a las especificaciones planteadas.
+
+A continuación se desarrollará el proceso de cada fase de forma preliminar para la primera iteración.
+
+\subsection{Investigación}
+\subsection{Implementación}
+\subsection{Evaluación}
+
+\printbibliography
+
+\end{document}
