@@ -2,7 +2,7 @@
 ./aux
 ./_minted*/
 .log
-.aux
+.aux/
 .dvi
 .lof
 .lot
@@ -20,3 +20,4 @@
 .fls
 .run.xml
 .txss2
+.gz
