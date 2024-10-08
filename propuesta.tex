@@ -27,20 +27,23 @@ Con el fin de unificar toda la información adquirida por los distintos sensores
 A continuación se listarán los objetivos prelimirares principales y secundarios que se pretende explorar durante el desarrollo del TFG.
 \begin{itemize}
     \item Principales
-        \subitem Lectura en bruto de los sensores de forma periódica y confiable.
-        \subitem Preprocesado e interpretación de lecturas.
-        \subitem Registrar medidas de forma local(Tarjeta SD).
-        \subitem Creación de un modelo de filtro de Kalman ajustado al sistema dinámico con el que se trabaja.
-        \subitem Modelado de un sistema dinámico que permita probar el filtro de Kalman.
-        \subitem Integración del filtro de Kalman y lectura de sensores en el hardware escogido.
-        \subitem Evaluación de rendimiento del sistema (Latencia + precisión + consumo).
-
+    \begin{itemize}
+        \item Lectura en bruto de los sensores de forma periódica y confiable.
+        \item Preprocesado e interpretación de lecturas.
+        \item Registrar medidas de forma local(Tarjeta SD).
+        \item Creación de un modelo de filtro de Kalman ajustado al sistema dinámico con el que se trabaja.
+        \item Modelado de un sistema dinámico que permita probar el filtro de Kalman.
+        \item Integración del filtro de Kalman y lectura de sensores en el hardware escogido.
+        \item Evaluación de rendimiento del sistema (Latencia + precisión + consumo).
+    \end{itemize}
     \item Secundarios
-        \subitem Grabar rutas de navegación en Tajeta SD.
-        \subitem Comparar ruta respecto a medidas.
-        \subitem Añadir telemetría.
-        \subitem Proponer correcciones.
-        \subitem Actuar conforme a las correcciones.
+    \begin{itemize}
+        \item Grabar rutas de navegación en Tajeta SD.
+        \item Comparar ruta respecto a medidas.
+        \item Añadir telemetría.
+        \item Proponer correcciones.
+        \item Actuar conforme a las correcciones.
+    \end{itemize}
 \end{itemize}
 
 \section{Planificación}
@@ -59,11 +62,90 @@ La segunda traducirá el modelo a un lenguaje de programación, comúnmente C, a
 
 Finalmente, se realizará una fase de evaluación en la que se comprobará el desempeño del modelo en un caso controlado, en el que se pueda comparar los resultados con los obtenidos, tanto en iteraciones anteriores como respecto a las especificaciones planteadas.
 
-A continuación se desarrollará el proceso de cada fase de forma preliminar para la primera iteración.
+A continuación se desarrollará el proceso de cada fase preliminarmente para la primera iteración.
 
 \subsection{Investigación}
+
+Durante esta fase se estudiará los métodos físicos y matemáticos que describen a nuestro sistema y se seleccionarán los más óptimos. También se tratará de investigar algoritmos que puedan acelerar la ejecución de código.
+
+El proceso de investigación se realizará de forma incremental siguiendo el siguiente desarrollo:
+
+\begin{enumerate}
+    \item Establecer sistemas de referencia ground y body. \cite[sec.~1.2 - 1.4]{gomez2012mecanica}
+    \item Creación de un modelo que simule las medidas de nuestros sensores dados unos parámetros y un tiempo. Inicialmente incorporará giroscopio, acelerometro y magnetometro.
+    \item Estudiar método para cuantificar errores respecto al modelo.
+    \item Desarrollo de un integrador de las medidas del giroscopio empleando quaterniones. (Sin ruido y calibrado).\cite{AshwinNarayan2017Sep}
+    \item Ecuación para obtención de orientación mediante acelerómetro + magnetómetro.
+    \item Estudio de errores de cada sensor(gir., acc., mag.).
+    \item Desarrollo de un filtro de kalman extendido simple tomando el giroscopio como medidas externa y ajustando error con acc, y mag.\cite{BibEntry2024Oct}
+    \item Incorporar medidas de giroscopio internamente.
+    \item Estudiar e incorporar efectos de calibración a modelo.
+    \item Estudiar distribución normalizada de medidas GNSS.
+    \item Estudiar error del barómetro.
+    \item Añadir GNSS y barómetro al modelo.
+    \item Ecuación de fusión de sensores.\cite{Becker_2023}
+\end{enumerate}
+
 \subsection{Implementación}
+
+Durante esta fase se irán implementado los resultados de la fase de investigación. Inicialmente bajo simulación y posteriormente en el hardware elegido.
+
+\begin{enumerate}
+    \item Crear un módulo que incorpore el modelo de simulación.
+        \begin{itemize}
+            \item  Debe exponer:
+            \begin{itemize}
+                \item Función obtención de medidas de giroscopio
+                \item Función obtención de medidas de acelerómetro
+                \item Función obtención de medidas de magnetómetro
+                \item Función con estado total del sistema
+            \end{itemize}
+        \end{itemize}
+        
+    \item Función error que compare estados del sistema. Interfaz matlab.
+    \item Función tranformación de vel. ang. de Euler a quaternion.
+    \item Función integración de quaterniones.
+    \item Función orientación a partir de acelerómetro y magnetómetro. \cite{BibEntry2024Oct}
+    \item Módulo Filtro Extendido de Kalman simple
+    \item Aplicar calibraciones.
+    \item Función obtención distribución normal GNSS
+    \item Función obtención de medidas barométricas
+    \item Incorporar cimulación de GNSS y barómetro al simulador
+    \item Función de fusión de sensores.
+    \item Adaptar módulos a esp-idf (FreeRTOS) \cite{espressif_idf_programming_guide}
+    
+    
+\end{enumerate}
+
 \subsection{Evaluación}
+
+A lo largo del desarrollo del proyecto se realizarán ensayos tanto simulados como reales en los que se estudie la exactitud, precisión y fiabilidad de los sistemas.
+
+Los resultados de los ensayos se compararán, simulados contra reales y ambos respecto a unas especificaciones \emph{(Aún por determinar)}.
+
+%\subsection{Cronograma}
+
+
+\section{Hardware preliminar}
+\begin{itemize}
+    \item ESP32 \cite{espressif_idf_programming_guide}
+    \item GY-91 10 DoF
+        \begin{itemize}
+            \item MPU9250\cite{invensense2016mpu9250}
+                \begin{itemize}
+                    \item MPU6500 6 DoF
+                    \item AK8963 3 DoF
+                \end{itemize}
+        \end{itemize}
+        
+        \begin{itemize}
+            \item BMP280 \cite{bme_2024}
+        \end{itemize}
+    \item NEO-6M
+\end{itemize}
+
+%\subsection{Especificaciones}
+
 
 \printbibliography
 
