@@ -1,0 +1,48 @@
+{
+    "InternalPDFViewer": {
+        "Embedded": true,
+        "File": "../../../../../../media/david/data/Users/deivi/Documents/Asignaturas/TFG/tfg_latex/propuesta.pdf"
+    },
+    "Session": {
+        "Bookmarks": [
+        ],
+        "CurrentFile": "propuesta.tex",
+        "FileVersion": 1,
+        "Files": [
+            {
+                "Col": 0,
+                "EditorGroup": 0,
+                "FileName": "TFG.tex",
+                "FirstLine": 0,
+                "FoldedLines": "",
+                "Line": 26
+            },
+            {
+                "Col": 25,
+                "EditorGroup": 0,
+                "FileName": "sty/eiiatfg.cls",
+                "FirstLine": 316,
+                "FoldedLines": "",
+                "Line": 346
+            },
+            {
+                "Col": 24,
+                "EditorGroup": 0,
+                "FileName": "propuesta.tex",
+                "FirstLine": 0,
+                "FoldedLines": "",
+                "Line": 20
+            },
+            {
+                "Col": 220,
+                "EditorGroup": 0,
+                "FileName": "datos-tfg.tex",
+                "FirstLine": 6,
+                "FoldedLines": "",
+                "Line": 22
+            }
+        ],
+        "MasterFile": "",
+        "VerticalSplit": false
+    }
+}
