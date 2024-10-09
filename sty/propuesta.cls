@@ -1,6 +1,6 @@
 \ProvidesClass{sty/propuesta}[2015/07/03 modified book class for UCLM EII TFG]
 
-\LoadClass[11pt,a4paper,oneside,titlepage]{article}
+\LoadClass[11pt,a4paper,oneside,titlepage,draft]{article}
 
 \let\oldsection\section
 \renewcommand{\section}{\clearpage\oldsection}
@@ -37,6 +37,10 @@ marginparwidth=1cm, marginparsep=1cm]{geometry}
 
 \usepackage{enumerate}
 \usepackage{enumitem}
+
+%\usepackage{draftwatermark}
+%\SetWatermarkText{Borrador}
+
 
 \setmainfont{STIX Two Text}
 \setsansfont{Arial}

@@ -1,8 +1,7 @@
-./tex/latex/_LEEME~
-./aux
-./_minted*/
+tex/latex/_LEEME~
+aux/
+_minted*/
 .log
-.aux/
 .dvi
 .lof
 .lot
