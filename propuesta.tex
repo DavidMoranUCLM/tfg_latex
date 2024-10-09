@@ -58,15 +58,15 @@ El TFG estará dividido en 3 secciones principales, que serán las que se irán 
 
 La primera consistirá en una fase de investigación en la que se estudie y plantee el modelo que se quiera implementar. El resultado será un modelo matemático y una propuesta breve sobre como implementarlo.
 
-La segunda traducirá el modelo a un lenguaje de programación, comúnmente C, aunque también se podrán emplear Python y Matlab para hacer pruebas de funcionalidad o hacer pruebas más rápidamente. Como resultado se obtendrá un código que se podrá ejecutar en el hardware escogido.
+La segunda traducirá el modelo a un lenguaje de programación, comúnmente C, aunque también se podrán emplear Python y Matlab para hacer pruebas de funcionalidad o hacer interfaces gráficas. Como resultado se obtendrá un código que se podrá ejecutar en el hardware escogido.
 
-Finalmente, se realizará una fase de evaluación en la que se comprobará el desempeño del modelo en un caso controlado, en el que se pueda comparar los resultados con los obtenidos, tanto en iteraciones anteriores como respecto a las especificaciones planteadas.
+Finalmente, se realizará una fase de evaluación en la que se comprobará el desempeño del modelo en un caso controlado, comparando los resultados con los obtenidos tanto en iteraciones anteriores como respecto a las especificaciones planteadas.
 
-A continuación se desarrollará el proceso de cada fase preliminarmente para la primera iteración.
+A continuación se desarrollará el proceso de cada fase de froma preliminar.
 
 \subsection{Investigación}
 
-Durante esta fase se estudiará los métodos físicos y matemáticos que describen a nuestro sistema y se seleccionarán los más óptimos. También se tratará de investigar algoritmos que puedan acelerar la ejecución de código.
+Durante esta fase se estudiará los métodos físicos y matemáticos que describen a nuestro sistema, de forma que se pueda escoger el más óptimo. También se tratará de investigar algoritmos que puedan acelerar la ejecución de código.
 
 El proceso de investigación se realizará de forma incremental siguiendo el siguiente desarrollo:
 
@@ -74,12 +74,14 @@ El proceso de investigación se realizará de forma incremental siguiendo el sig
     \item Establecer sistemas de referencia ground y body. \cite[sec.~1.2 - 1.4]{gomez2012mecanica}
     \item Creación de un modelo que simule las medidas de nuestros sensores dados unos parámetros y un tiempo. Inicialmente incorporará giroscopio, acelerometro y magnetometro.
     \item Estudiar método para cuantificar errores respecto al modelo.
-    \item Desarrollo de un integrador de las medidas del giroscopio empleando quaterniones. (Sin ruido y calibrado).\cite{AshwinNarayan2017Sep}
+    \item Desarrollo de un integrador de las medidas del giroscopio empleando quaterniones. (Sin ruido y calibrado). \cite{AshwinNarayan2017Sep}
     \item Ecuación para obtención de orientación mediante acelerómetro + magnetómetro.
-    \item Estudio de errores de cada sensor(gir., acc., mag.).
-    \item Desarrollo de un filtro de kalman extendido simple tomando el giroscopio como medidas externa y ajustando error con acc, y mag.\cite{BibEntry2024Oct}
+    \item Estudio de errores de cada sensor (gir., acc., mag.).
+    \item Desarrollo de un filtro de kalman extendido simple tomando el giroscopio como medidas externa y ajustando deriva con el acelerómetro y magnetómetro \cite{PyAHRSdocs}
     \item Incorporar medidas de giroscopio internamente.
-    \item Estudiar e incorporar efectos de calibración a modelo.
+    \item Estudiar e incorporar efectos de calibración al modelo.
+    \item Estudiar relación entre coordenadas geográficas y desplazamientos.
+    \item Estudiar protocolo y estándares GNSS.
     \item Estudiar distribución normalizada de medidas GNSS.
     \item Estudiar error del barómetro.
     \item Añadir GNSS y barómetro al modelo.
@@ -105,14 +107,15 @@ Durante esta fase se irán implementado los resultados de la fase de investigaci
     \item Función error que compare estados del sistema. Interfaz matlab.
     \item Función tranformación de vel. ang. de Euler a quaternion.
     \item Función integración de quaterniones.
-    \item Función orientación a partir de acelerómetro y magnetómetro. \cite{BibEntry2024Oct}
+    \item Función orientación a partir de acelerómetro y magnetómetro. \cite{PyAHRSdocs}
     \item Módulo Filtro Extendido de Kalman simple
     \item Aplicar calibraciones.
-    \item Función obtención distribución normal GNSS
+    \item Función transformada Desplazamientos <-> Coordenadas geográficas
+    \item Función obtención de distribución normal GNSS. 
     \item Función obtención de medidas barométricas
     \item Incorporar cimulación de GNSS y barómetro al simulador
     \item Función de fusión de sensores.
-    \item Adaptar módulos a esp-idf (FreeRTOS) \cite{espressif_idf_programming_guide}
+    \item Adaptar módulos a esp-idf (FreeRTOS) \cite{esp_idf_programming_guide}
     
     
 \end{enumerate}
@@ -128,10 +131,10 @@ Los resultados de los ensayos se compararán, simulados contra reales y ambos re
 
 \section{Hardware preliminar}
 \begin{itemize}
-    \item ESP32 \cite{espressif_idf_programming_guide}
-    \item GY-91 10 DoF
+    \item SoC: ESP32  \cite{invensense2016mpu9250}
+    \item IMU: GY-91 10 DoF
         \begin{itemize}
-            \item MPU9250\cite{invensense2016mpu9250}
+            \item MPU9250 \cite{invensense2016mpu9250}
                 \begin{itemize}
                     \item MPU6500 6 DoF
                     \item AK8963 3 DoF
@@ -141,11 +144,10 @@ Los resultados de los ensayos se compararán, simulados contra reales y ambos re
         \begin{itemize}
             \item BMP280 \cite{bme_2024}
         \end{itemize}
-    \item NEO-6M
+    \item GNSS: NEO-6M
 \end{itemize}
 
 %\subsection{Especificaciones}
-
 
 \printbibliography
 
